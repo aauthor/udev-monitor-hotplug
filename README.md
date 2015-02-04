@@ -1,28 +1,15 @@
 # Description
 
-I was tired of having to configure manually the disposition of my monitors when I plugged them in.
+Simple udev rules and scripts to easily switch from laptop display to external display, and vice versa.
 
-So I decided to write this script that define custom behaviour when monitor are plugged in
-
-You might want to adapt the script to your needs ./usr/local/bin/monitor-hotplug.sh 
-
-I was inspired by http://stackoverflow.com/questions/5469828/how-to-create-a-callback-for-monitor-plugged-on-an-intel-graphics
+Forked from https://github.com/codingtony/udev-monitor-hotplug .
 
 ## Installation
   * clone the repo
-  * sudo cp usr/local/bin/monitor-hotplug.sh /usr/local/bin/
-  * sudo cp etc/udev/rules.d/99-monitor-hotplug.rules  /etc/udev/rules.d/
-  * sudo apt-get install consolekit
-  * sudo service udev restart
+  * `sudo install usr/local/bin/monitor-hotplug.sh /usr/local/bin/`
+  * `sudo install -m644 etc/udev/rules.d/99-monitor-hotplug.rules /etc/udev/rules.d/`
+  * `sudo systemctl restart systemd-udevd`
 
 ## Debuging
-  * sudo service udev stop
-  * sudo udevd --debug 2>&1 | tee /tmp/udev.log
-  * check what's happening when you plug/unplug your monitor
-
-
-## License 
-
-I'm not responsible of the effect of this script on your computer
-
-Feel free to do whatever you want with it :-)
+  * `sudo udevadm monitor`
+  * Check what's happening when you plug / unplug your external monitor.
