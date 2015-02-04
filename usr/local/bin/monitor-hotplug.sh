@@ -9,9 +9,9 @@ displaynum=`ls /tmp/.X11-unix/* | sed s#/tmp/.X11-unix/X##`
 display=":$displaynum"
 export DISPLAY=":$displaynum"
 
-uid=$(loginctl list-users | grep -Po '\d{4}') # Assuming uid >= 1000 #FIXME
-if [ -n "$uid" ]; then
-  export XAUTHORITY=$(ps -C Xorg.bin -f --no-header | sed -n 's/.*-auth //; s/ -[^ ].*//; p')
+user=$(loginctl list-users | grep -P '\d{4}' | awk '{print $2}') # Assuming uid >= 1000 #FIXME
+if [ -n "$user" ]; then
+  export XAUTHORITY="/home/$user/.Xauthority"
 else
   echo "unable to find an X session"
   exit 1
