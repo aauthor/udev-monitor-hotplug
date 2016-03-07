@@ -1,9 +1,11 @@
 #!/bin/bash -
 
-INTNAME="eDP1"
-#INTSTATUS="connected"
-EXTNAME="DP1"
-EXTSTATUS=$(cat /sys/class/drm/card0-DP-1/status)
+# modify these three variables accordingly for your system
+INTERAL_X_OUTPUT="LVDS"
+EXTERNAL_X_OUTPUT="HDMI-0"
+EXTERNAL_DRM_CONNECTOR="card0-HDMI-A-1"
+
+EXTERNAL_MONITOR_STATUS=$(cat /sys/class/drm/$EXTERNAL_DRM_CONNECTOR/status)
 
 export DISPLAY=":0"
 
@@ -15,10 +17,8 @@ else
   exit 1
 fi
 
-if [[ $EXTSTATUS = "connected" ]]; then
-  xrandr --output $INTNAME --off --output $EXTNAME --auto
-  nitrogen --restore || true
-elif [[ $EXTSTATUS = "disconnected" ]]; then
-  xrandr --output $INTNAME --auto --output $EXTNAME --off
-  nitrogen --restore || true
+if [[ $EXTERNAL_MONITOR_STATUS = "connected" ]]; then
+  xrandr --output $INTERAL_X_OUTPUT --off --output $EXTERNAL_X_OUTPUT --auto
+elif [[ $EXTERNAL_MONITOR_STATUS  = "disconnected" ]]; then
+  xrandr --output $INTERAL_X_OUTPUT --auto --output $EXTERNAL_X_OUTPUT --off
 fi
